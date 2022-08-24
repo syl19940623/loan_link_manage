@@ -1,0 +1,106 @@
+﻿/* 设置css变量 */
+:root {
+	--themeColor: #006DB8;
+}
+
+/* css初始化 */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.hideScrollBar::-webkit-scrollbar {
+	display: none;
+}
+
+ol,
+ul {
+	list-style: none;
+}
+
+body {
+ 	font: 14px Microsoft YaHei;
+	color: #606060;
+	background: #f7f8fa;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: normal;
+	font-size: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	/* text-decoration: underline; */
+}
+
+img {
+	vertical-align: baseline;
+}
+
+input {
+	border: none;
+	outline: 0;
+	/* padding: 0 5px; */
+}
+
+select {
+	outline: 0;
+}
+
+textarea {
+	outline: 0;
+	resize: none;
+	padding: 5px;
+}
+
+button {
+	border: none;
+	outline: none;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.clear:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.raelc:before {
+	content: "";
+	display: table;
+}
+
+.fl {
+	float: left;
+}
+
+.fr {
+	float: right;
+}
+
+.ellipsis {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* 元素事件失效 */
+.domDisabled {
+	background: #ccc;
+	color: #f0f0f0;
+	pointer-events: none;
+}
