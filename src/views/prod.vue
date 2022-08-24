@@ -207,7 +207,7 @@
         <template v-if="item.remarks.split(':')[0] === '单选框'">
           <van-cell-group :key="index" :title="(index + 1) + '、' + item.question" v-if="index == 0 || answer['101'] == '是'">
             <van-radio-group v-model="answer[item.id]">
-              <template v-for="(childIndex, childItem) in questionConvert(item.remarks)">
+              <template v-for="(childItem, childIndex) in questionConvert(item.remarks)">
                 <van-radio :key="childIndex" :name="childItem">{{childItem}}</van-radio>
               </template>
             </van-radio-group>

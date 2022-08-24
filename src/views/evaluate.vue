@@ -9,19 +9,19 @@
     />
     <div style="height: 46px;"></div>
     <template v-for="(item, index) in questionList">
-      <van-cell-group :key="index" :title="(index+1) + '、' + item.question" v-if="item.remarks.split(':')[0] == '单选框'">
+      <van-cell-group :key="index" :title="(index + 1) + '、' + item.question" v-if="item.remarks.split(':')[0] == '单选框'">
         <van-radio-group v-model="formData[item.id]">
-          <template v-for="(childIndex, childItem) in questionConvert(item.remarks)">
+          <template v-for="(childItem, childIndex) in questionConvert(item.remarks)">
             <van-radio :key="childIndex" :name="childItem">{{childItem}}</van-radio>
           </template>
         </van-radio-group>
       </van-cell-group>
       <div class="evaluateItem" :key="index" v-if="item.remarks.split(':')[0] == '满意框'">
-        <div class="title">{{index+1}}、{{item.question}}</div>
+        <div class="title">{{index + 1}}、{{item.question}}</div>
         <div class="evaluate">
           <template v-for="(childItem, childIndex) in questionConvert(item.remarks)">
             <div :key="childIndex" class="faceImg" :name="item.id" :childName="childItem"  :style="formData[item.id] != childItem ? 'filter: grayscale(1);' : ''" @click.stop="selectFaceImg(item.id, childItem)">
-              <img :src="require('../assets/img/evaluate/' + (3-childIndex) + '.png')" alt="">
+              <img :src="require('../assets/img/evaluate/' + (3 - childIndex) + '.png')" alt="">
               <h1>{{childItem}}</h1>
             </div>
           </template>
