@@ -149,7 +149,7 @@
       },
       revokeApply(action, done) {
         if (action === 'confirm') {
-          if (trim(this.revokeReason) == '') {
+          if (this.revokeReason.trim() == '') {
             done(false)
             this.$notify('撤销原因不能为空')
           } else {
