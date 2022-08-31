@@ -34,6 +34,6 @@
 </script>
 
 <style lang="less" scoped>
-  .main{height: calc(100vh - 50px);overflow-x: hidden;overflow-y: auto;}
+  .main{height: calc(100vh - 65px);overflow-x: hidden;overflow-y: auto;}
   .van-hairline--top-bottom{box-shadow: 0 0 8px 2px rgba(0,0,0,.05);}
 </style>

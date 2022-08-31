@@ -19,24 +19,28 @@
           <van-button type="info" size="small" @click="$router.replace('home')">去首页</van-button>
         </div>
       </template>
+      <QrCode :show="showQrCode" style="margin-top: 25px;"></QrCode>
     </div>
   </div>
 </template>
 
 <script>
   import Header from "@/components/Header";
+  import QrCode from "@/components/QrCode";
 
   export default {
     name: "result",
     components: {
-      Header
+      Header,
+      QrCode
     },
     data() {
       return {
         type: '',
         title: '',
         describe: '',
-        redirect: ''
+        redirect: '',
+        showQrCode: false
       }
     },
     mounted() {
@@ -44,12 +48,22 @@
       this.title = this.$route.query.title
       this.describe = this.$route.query.describe
       this.redirect = this.$route.query.redirect
+
+      this.$post('isFollowMP').then(res => {
+        if (res.code == 0) {
+          if (res.data.subscribe == 0 && this.type == 'success') {
+            this.showQrCode = true
+          } else {
+            this.showQrCode = false
+          }
+        }
+      })
     }
   }
 </script>
 
 <style lang="less" scoped>
-  .result{position: fixed;top: 45%;left: 0;transform: translateY(-50%);width: 100%;padding: 0 30px;
+  .result{position: fixed;top: 50%;left: 0;transform: translateY(-50%);width: 100%;padding: 0 30px;
     svg{width: 64px;display: block;margin: 0 auto;}
     .success{
       svg{fill: #67c23a;}

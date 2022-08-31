@@ -26,7 +26,7 @@
     </div>
     <div class="notice" v-if="noticeList.length > 0">
       <div class="icon">
-        <img src="../assets/img/notice1.png" alt="">
+        <img src="../assets/img/notice.png" alt="">
       </div>
       <div class="content">
         <van-swipe :autoplay="5000" :show-indicators="false" :height="30" :duration="300" vertical>
@@ -49,22 +49,26 @@
         </div>
       </div>
     </div>
+    <QrCode :show="showQrCode"></QrCode>
   </div>
 </template>
 
 <script>
   import Header from "@/components/Header";
+  import QrCode from "@/components/QrCode";
 
   export default {
     name: "index",
     components: {
-      Header
+      Header,
+      QrCode
     },
     data() {
       return {
         statistic: {},
         noticeList: [],
-        productList: []
+        productList: [],
+        showQrCode: false
       };
     },
     methods: {
@@ -100,14 +104,28 @@
             this.$notify(res.message)
           }
         })
+      },
+      judgeFocusThePublic() {
+        this.$post('isFollowMP').then(res => {
+          if (res.code == 0) {
+            alert(res.data.subscribe)
+            if (res.data.subscribe == 0) {
+              this.showQrCode = true
+            } else {
+              this.showQrCode = false
+            }
+          }
+        })
       }
     },
     mounted() {
+      this.judgeFocusThePublic()
       this.loadBasicInfo()
       this.loadNotice()
       this.loadProduct()
     },
     activated() {
+      this.judgeFocusThePublic()
       this.loadBasicInfo()
     }
   }

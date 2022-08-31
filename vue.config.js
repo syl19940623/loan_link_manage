@@ -5,14 +5,14 @@ module.exports = {
     config
       .plugin('html')
       .tap(args => {
-        args[0].title= '贷款环节管理'
+        args[0].title= '黎都快贷'
         return args
       })
   },
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://192.168.0.20/dingding/lidu/loan/',
+        target: 'http://8.141.251.9/iis/dingding/lidu/loan/',
         ws: false,
         changeOrigin: true,
         pathRewrite: {
