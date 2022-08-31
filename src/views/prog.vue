@@ -180,37 +180,28 @@
         } else {
           done()
         }
+      },
+      loadBasicInfo() {
+        this.$post('getOverview').then(res => {
+          if (res.code == 0) {
+            const name = res.data.rows[0].name
+            if (name) {
+              this.$store.commit('saveName', name)
+              this.loadLoanList()
+            } else {
+              this.noLoginShow = true
+            }
+          } else if (res.code == 200) {
+            this.$notify(res.message)
+          }
+        })
       }
     },
-    created() {
-      this.$post('getOverview').then(res => {
-        if (res.code == 0) {
-          const name = res.data.rows[0].name
-          if (name) {
-            this.$store.commit('saveName', name)
-          }
-        } else if (res.code == 200) {
-          this.$notify(res.message)
-        }
-      })
-    },
     mounted() {
-      this.$nextTick(() => {
-        if (!this.$store.state.name) {
-          this.noLoginShow = true
-        } else {
-          this.loadLoanList()
-        }
-      })
+      this.loadBasicInfo()
     },
     activated() {
-      this.$nextTick(() => {
-        if (!this.$store.state.name) {
-          this.noLoginShow = true
-        } else {
-          this.loadLoanList()
-        }
-      })
+      this.loadBasicInfo()
     }
   }
 </script>

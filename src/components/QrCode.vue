@@ -36,12 +36,13 @@
       .botLeft{bottom: 0;left: 0;}
       .botRight{bottom: 0;right: 0;}
       .mainImg{width: 100%;}
-      .scanLine{width: calc(100% - 10px);height: 20px;background: linear-gradient(to bottom, transparent, rgba(255,159,8,.5));position: absolute;left: 5px;animation: scanLineMove 2.5s linear infinite;opacity: 0;}
+      .scanLine{width: calc(100% - 10px);height: 20px;background: linear-gradient(to bottom, transparent, rgba(255,159,8,.5));position: absolute;top: 0;left: 5px;animation: scanLineMove 1.5s linear infinite;opacity: 0;}
     }
   }
   @keyframes scanLineMove {
     0%{top: 0;opacity: 1;}
-    50%{top: 180px;opacity: 1;}
-    100%{top: 180px;opacity: 0;}
+    80%{top: 180px;opacity: 1;}
+    90%{top: 180px;opacity: 0;}
+    100%{top: 0;opacity: 0;}
   }
 </style>

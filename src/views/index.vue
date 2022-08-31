@@ -108,7 +108,6 @@
       judgeFocusThePublic() {
         this.$post('isFollowMP').then(res => {
           if (res.code == 0) {
-            alert(res.data.subscribe)
             if (res.data.subscribe == 0) {
               this.showQrCode = true
             } else {
