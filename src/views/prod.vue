@@ -63,18 +63,6 @@
           <span slot="right-icon">万元</span>
         </van-field>
         <van-field
-          v-model="formData.dotName"
-          readonly
-          :is-link="true"
-          label="办理网点"
-          label-width="72px"
-          placeholder="请选择办理网点"
-          @click="dotShow = true"
-        />
-        <van-popup v-model="dotShow" position="bottom">
-          <van-picker show-toolbar :columns="dotList" value-key="name" @cancel="dotShow = false" @confirm="dotConfirm"/>
-        </van-popup>
-        <van-field
           v-model="formData.purpose"
           label="贷款用途"
           type="textarea"
@@ -157,14 +145,6 @@
             label-width="116px"
             placeholder="请输入企业名称"
           />
-          <!--
-          <van-field
-            v-model="formData.uscc"
-            label="统一社会信用代码"
-            label-width="116px"
-            placeholder="请输入统一社会信用代码"
-          />
-          -->
           <van-field
             v-model="formData.orglp"
             label="法人姓名"
@@ -207,9 +187,9 @@
         <template v-if="item.remarks.split(':')[0] === '单选框'">
           <van-cell-group :key="index" :title="(index + 1) + '、' + item.question" v-if="index == 0 || answer['101'] == '是'">
             <van-radio-group v-model="answer[item.id]">
-              <template v-for="(childItem, childIndex) in questionConvert(item.remarks)">
-                <van-radio :key="childIndex" :name="childItem">{{childItem}}</van-radio>
-              </template>
+              <div v-for="(childItem, childIndex) in questionConvert(item.remarks)" :key="childIndex">
+                <van-radio :name="childItem">{{childItem}}</van-radio>
+              </div>
             </van-radio-group>
           </van-cell-group>
         </template>
@@ -259,8 +239,6 @@
             values: []
           }
         ],
-        dotShow: false,
-        dotList: [],
         formData: {},
         answer: {
           '101': ''
@@ -286,10 +264,6 @@
             {
               key: 'amount',
               name: '申请额度'
-            },
-            {
-              key: 'dot',
-              name: '办理网点'
             },
             {
               key: 'purpose',
@@ -469,20 +443,6 @@
         this.formData.areaName = areaName.slice(0, -3)
         this.areaShow = false
       },
-      loadDot() {
-        this.$post('getDotDict').then(res => {
-          if (res.code == 0) {
-            this.dotList = res.data.rows
-          } else if (res.code == 200) {
-            this.$notify(res.message)
-          }
-        })
-      },
-      dotConfirm(value, index) {
-        this.formData.dot = value.id + ''
-        this.formData.dotName = value.name
-        this.dotShow = false
-      },
       refreshImg() {
         this.img = '/api/code.asp?r=' + Math.random()
       },
@@ -557,9 +517,6 @@
           const index = attr == '0101' ? 0 : (attr == '0102' ? 1 : 2)
           if (this.judgeRequiredField(this.requiredField.two[index])) {
             if (index == 2) {
-              // if (!util.checkLicense(this.formData.uscc)) {
-              //   this.$notify('统一社会信用代码格式有误')
-              // }
               if (!util.checkPhone(this.formData.orglptel)) {
                 this.$notify('法人电话号码格式有误')
               } else {
@@ -594,7 +551,7 @@
               sendData.referrer = this.referrer
             }
             sendData.amount = sendData.amount * 10000
-            const delKeys = ['areaName', 'dotName', 'productName', 'productAttr']
+            const delKeys = ['areaName', 'productName', 'productAttr']
             for (let v of delKeys) {
               delete sendData[v]
             }
@@ -615,7 +572,6 @@
     },
     mounted() {
       this.loadArea()
-      this.loadDot()
       this.loadQuestion()
       if (this.$route.query.referrer) {
         this.referrer = this.$route.query.referrer
@@ -627,7 +583,6 @@
 <style lang="less" scoped>
   .extendQuestion{margin-top: -10px;
     .van-cell-group{overflow: hidden;padding: 15px;
-      //.van-radio{float: left;margin-right: 35px;}
       .van-radio{margin-bottom: 15px;}
       .van-radio:last-child{margin-bottom: 0;}
     }
