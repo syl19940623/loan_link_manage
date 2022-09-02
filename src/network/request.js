@@ -8,12 +8,6 @@ const instance = axios.create({
   timeout: 60000
 })
 
-const codeInstance = axios.create({
-  // 接口地址根路径
-  baseURL: '/code',
-  timeout: 60000
-})
-
 //请求前拦截
 instance.interceptors.request.use(config => {
   // const saveAuthorization = window.parent.getToken()

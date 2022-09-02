@@ -12,7 +12,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://8.141.251.9/iis/dingding/lidu/loan/',
+        target: 'http://192.168.0.20/dingding/lidu/loan/',
         ws: false,
         changeOrigin: true,
         pathRewrite: {
