@@ -43,7 +43,7 @@
             <img :src="require('../assets/img/productList/' + (index + 1) + '.png')" alt="">
           </div>
           <h1 class="name">{{item.name}}</h1>
-          <router-link tag="span" :to="'prod?prodId=' + item.id" class="go">
+          <router-link tag="span" :to="'prod?prodId=' + item.attribute" class="go">
             去办理 <van-icon name="arrow" style="line-height: 30px;"/>
           </router-link>
         </div>

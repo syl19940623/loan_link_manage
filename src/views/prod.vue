@@ -338,7 +338,7 @@
       next(vm => {
         vm.loadProduct(() => {
           for (let v of vm.productList) {
-            if ((vm.$route.query.prodId && v.id == vm.$route.query.prodId) || (vm.$route.query.productId && v.qyyxid && v.qyyxid.split(',').includes(vm.$route.query.productId))) {
+            if (vm.$route.query.prodId && v.attribute == vm.$route.query.prodId) {
               vm.loanName = v.name
               vm.formData.product = v.id
               vm.formData.productName = v.name
@@ -574,7 +574,11 @@
       this.loadArea()
       this.loadQuestion()
       if (this.$route.query.referrer) {
-        this.referrer = this.$route.query.referrer
+        this.$post('getJobnumberByDingId', {
+          cDingId: this.$route.query.referrer
+        }).then(res => {
+          this.referrer = res?.data?.jobnumber
+        })
       }
     }
   }
