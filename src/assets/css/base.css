@@ -1,6 +1,13 @@
-﻿/* 设置css变量 */
+﻿/* 样式变量 */
 :root {
-	--themeColor: #006DB8;
+
+}
+
+/* 深色模式样式变量 */
+@media (prefers-color-scheme: dark) {
+	:root {
+
+	}
 }
 
 /* css初始化 */
