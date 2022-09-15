@@ -231,7 +231,11 @@
         productShow: false,
         productList: [],
         areaShow: false,
+        areaData: [],
         areaList: [
+          {
+            values: []
+          },
           {
             values: []
           },
@@ -399,47 +403,60 @@
       loadArea() {
         this.$post('getAreaDict').then(res => {
           if (res.code == 0) {
-            const oneArr = [], twoArr = []
-            for (let v of res.data.rows) {
+            this.areaData = res.data.rows
+            const oneArr = [], twoArr = [], threeArr = []
+            for (let v of this.areaData) {
               if (v.id.length == 6) {
                 oneArr.push(v)
-              } else {
+              } else if (v.id.length == 9) {
                 twoArr.push(v)
+              } else if (v.id.length == 12 && v.id.slice(0, 9) == twoArr[0].id) {
+                threeArr.push(v)
               }
             }
             oneArr.push({id: '000000', name: '其它'})
             this.areaList[0].values = oneArr
             this.areaList[1].values = twoArr
+            this.areaList[2].values = threeArr
           } else if (res.code == 200) {
             this.$notify(res.message)
           }
         })
       },
-      areaChange(picker, values) {
-        this.$post('getAreaDict').then(res => {
-          if (res.code == 0) {
-            const twoArr = []
-            if (values[0].id == '000000') {
-              twoArr.push({id: '000000', name: '其它'})
-            } else {
-              for (let v of res.data.rows) {
-                if (v.id.length == 9) {
-                  twoArr.push(v)
-                }
+      areaChange(picker, values, index) {
+        if (index == 0) {
+          const twoArr = [], threeArr = []
+          if (values[0].id == '000000') {
+            twoArr.push({id: '000000', name: '其它'})
+            threeArr.push({id: '000000', name: '其它'})
+          } else {
+            for (let v of this.areaData) {
+              if (v.id.length == 9) {
+                twoArr.push(v)
+              }
+              if (v.id.length == 12 && v.id.slice(0, 9) == twoArr[0].id) {
+                threeArr.push(v)
               }
             }
-            picker.setColumnValues(1, twoArr);
-          } else if (res.code == 200) {
-            this.$notify(res.message)
           }
-        })
+          picker.setColumnValues(1, twoArr);
+          picker.setColumnValues(2, threeArr);
+        } else if (index == 1) {
+          const threeArr = []
+          for (let v of this.areaData) {
+            if (v.id.length == 12 && v.id.slice(0, 9) == values[1].id) {
+              threeArr.push(v)
+            }
+          }
+          picker.setColumnValues(2, threeArr);
+        }
       },
       areaConfirm(value, index) {
         let areaName = ''
         for (let v of value) {
           areaName += v.name + ' / '
         }
-        this.formData.area = value[1].id
+        this.formData.area = value[2].id
         this.formData.areaName = areaName.slice(0, -3)
         this.areaShow = false
       },

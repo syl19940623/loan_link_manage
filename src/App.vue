@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <transition name="van-fade" mode="out-in">
+    <transition name="van-fade">
       <keep-alive include="home">
         <router-view/>
       </keep-alive>
