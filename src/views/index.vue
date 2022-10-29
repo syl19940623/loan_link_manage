@@ -4,24 +4,24 @@
       <img src="../assets/img/topBg.jpg" alt="">
       <div class="topText">
         <Header :shadow="false"></Header>
-        <div class="topTextCol">
-          <div class="num">
-            <h1><span>{{statistic.quantity}}</span>户</h1>
-            <h2>累计发放户数</h2>
-          </div>
-        </div>
-        <div class="topTextCol">
-          <div class="money">
-            <h1><span>{{statistic.amount}}</span>万</h1>
-            <h2>累计发放金额</h2>
-          </div>
-        </div>
-        <div class="topTextCol">
-          <div class="time">
-            <h1><span>{{statistic.avgday}}</span>天</h1>
-            <h2>放贷审批时长</h2>
-          </div>
-        </div>
+<!--        <div class="topTextCol">-->
+<!--          <div class="num">-->
+<!--            <h1><span>{{statistic.quantity}}</span>户</h1>-->
+<!--            <h2>累计发放户数</h2>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="topTextCol">-->
+<!--          <div class="money">-->
+<!--            <h1><span>{{statistic.amount}}</span>万</h1>-->
+<!--            <h2>累计发放金额</h2>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="topTextCol">-->
+<!--          <div class="time">-->
+<!--            <h1><span>{{statistic.avgday}}</span>天</h1>-->
+<!--            <h2>放贷审批时长</h2>-->
+<!--          </div>-->
+<!--        </div>-->
       </div>
     </div>
     <div class="notice" v-if="noticeList.length > 0">

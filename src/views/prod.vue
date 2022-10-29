@@ -29,25 +29,25 @@
           label-width="72px"
           placeholder="请输入联系人姓名"
         />
-        <van-field
-          v-model="formData.productName"
-          readonly
-          :is-link="true"
-          label="贷款产品"
-          label-width="72px"
-          placeholder="请选择贷款产品"
-          @click="productShow = true"
-        />
-        <van-popup v-model="productShow" position="bottom">
-          <van-picker show-toolbar :columns="productList" value-key="name" @cancel="productShow = false" @confirm="productConfirm"/>
-        </van-popup>
+<!--        <van-field-->
+<!--          v-model="formData.productName"-->
+<!--          readonly-->
+<!--          :is-link="true"-->
+<!--          label="贷款产品"-->
+<!--          label-width="72px"-->
+<!--          placeholder="请选择贷款产品"-->
+<!--          @click="productShow = true"-->
+<!--        />-->
+<!--        <van-popup v-model="productShow" position="bottom">-->
+<!--          <van-picker show-toolbar :columns="productList" value-key="name" @cancel="productShow = false" @confirm="productConfirm"/>-->
+<!--        </van-popup>-->
         <van-field
           v-model="formData.areaName"
           readonly
           :is-link="true"
-          label="所属片区"
+          label="所属地址"
           label-width="72px"
-          placeholder="请选择所属片区"
+          placeholder="请选择户籍/住址/经营地址"
           @click="areaShow = true"
         />
         <van-popup v-model="areaShow" position="bottom">
@@ -104,10 +104,10 @@
           />
           <van-field
             v-model="formData.address"
-            label="家庭住址"
+            label="详细地址"
             type="textarea"
             label-width="58px"
-            placeholder="请输入家庭住址"
+            placeholder="请输入详细地址"
             rows="1"
             autosize
           />
@@ -130,10 +130,10 @@
           />
           <van-field
             v-model="formData.address"
-            label="经营地址"
+            label="详细地址"
             type="textarea"
             label-width="58px"
-            placeholder="请输入经营地址"
+            placeholder="请输入详细地址"
             rows="1"
             autosize
           />
@@ -168,10 +168,10 @@
           />
           <van-field
             v-model="formData.address"
-            label="经营地址"
+            label="详细地址"
             type="textarea"
             label-width="116px"
-            placeholder="请输入经营地址"
+            placeholder="请输入详细地址"
             rows="1"
             autosize
           />
@@ -469,8 +469,34 @@
         } else if (!util.checkPhone(this.formData.mobile)) {
           this.$notify('手机号码格式不正确');
         } else {
-          this.refreshImg()
-          this.imgCodeShow = true
+          this.disabled = true
+          this.$post('getImgValidCode').then(res => {
+            if (res?.data) {
+              this.$post('sendSMSCode', {
+                tcPhone: this.formData.mobile,
+                tcImgValidCode: res.data.code
+              }).then(res => {
+                if (res.code == 0) {
+                  let second = 60
+                  this.btnText = second + '秒后重新获取'
+                  const timer = setInterval(() => {
+                    second--
+                    this.btnText = second + '秒后重新获取'
+                    if (second <= 0) {
+                      clearInterval(timer)
+                      this.btnText = '重新获取验证码'
+                      this.disabled = false
+                    }
+                  }, 1000)
+                } else {
+                  this.disabled = false
+                }
+              })
+            } else {
+              this.refreshImg()
+              this.imgCodeShow = true
+            }
+          })
         }
       },
       imgCodeDialogClose(action, done) {
@@ -616,4 +642,6 @@
     img{display: block;margin: 0 auto 15px;}
     .van-cell{border: 1px solid #ebedf0;}
   }
+  :deep(.van-tabs__wrap){height: 24px;}
+  :deep(.van-tabs__nav--card){margin: 0;height: 24px;width: 246px;}
 </style>
